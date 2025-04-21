@@ -1,43 +1,68 @@
 'use client';
-import React from 'react'
-import { useProfileProgram, useProfileProgramAccount } from '../profile/profile-data-access';
-import { PublicKey } from "@solana/web3.js"
-import { useProjectProgramAccount } from './project-data-access';
+import React, { useState } from 'react'
+import { useContract } from '../../contexts/ContractContext';
+import { Input } from '../ui/input';
+import { Button } from '../ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
 
 const ProjectUI = () => {
 
-    const { createMutation } = useProjectProgramAccount({ account: PublicKey.default });
+    const { createProject } = useContract();
 
-    const handleSubmit = (event: React.FormEvent) => {
+    const [projectName, setProjectName] = useState("");
+    const [skills, setSkills] = useState("");
+    const [projectLink, setProjectLink] = useState("");
+
+    const handleSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
-        createMutation.mutate(
-           { projectName: "DeFi Protocol", skills: ["Solidity", "Web3"] }
-        )
-
-
-        // TODO: Handle form submission
+        try {
+            const result = await createProject(projectName, skills.split(","), "link_placeholder");
+            console.log("Project created with transaction ID:", result);
+        } catch (error) {
+            console.error("Error creating project:", error);
+        }
     };
-  return (
-    <div>
-        <div className="my-8  flex flex-col gap-8 p-6 border rounded-lg border-slate-400">
-            <h1>Create Project Data</h1>
-            <form className=" flex flex-col gap-8" onSubmit={(e) => handleSubmit(e)}>
-                <input
-                    type="text"
-                    className="input input-bordered"
-                    placeholder="Enter Project Name"
-                />
-                <input
-                    type="text"
-                    className="input input-bordered"
-                    placeholder="Enter Skills"
-                />
-                <button type="submit" className="btn btn-primary">Submit</button>
-            </form>
-        </div>
 
-    </div>
-  )
+    return (
+     
+
+                <Card className='mt-8'>
+                
+                        <CardHeader>
+                            <CardTitle>Create a Project</CardTitle>
+                        </CardHeader>
+                        {/* <CardDescription>Description of the project</CardDescription> */}
+                        <CardContent>
+            
+                <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
+                    <Input
+                        type="text"
+                        className="input input-bordered"
+                        placeholder="Enter Project Name"
+                        value={projectName}
+                        onChange={(e) => setProjectName(e.target.value)}
+                    />
+                    <Input
+                        type="text"
+                        className="input input-bordered"
+                        placeholder="Enter Skills (comma separated)"
+                        value={skills}
+                        onChange={(e) => setSkills(e.target.value)}
+                    />
+                    <Input
+                        type="text"
+                        className="input input-bordered"
+                        placeholder="Enter Project Link"
+                        value={projectLink}
+                        onChange={(e) => setProjectLink(e.target.value)}
+                    />
+                    <Button type="submit" className="btn btn-primary">Submit</Button>
+                </form>
+                </CardContent>
+
+                </Card>
+       
+    );
 }
 
 export default ProjectUI

@@ -24,13 +24,13 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en">
-            <body>       
-                 <ReactQueryProvider>
-                <ClusterProvider>
-                    <SolanaProvider>{children}
-                    </SolanaProvider>
-                </ClusterProvider>
-            </ReactQueryProvider>
+            <body>
+                <ReactQueryProvider>
+                    <ClusterProvider>
+                        <SolanaProvider>{children}
+                        </SolanaProvider>
+                    </ClusterProvider>
+                </ReactQueryProvider>
             </body>
         </html>
     );
