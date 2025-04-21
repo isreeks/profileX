@@ -1,96 +1,33 @@
-# profile
+# ProfileX
 
-This project is generated with the [create-solana-dapp](https://github.com/solana-developers/create-solana-dapp) generator.
+## Overview
 
-## Getting Started
+ProfileX is a decentralized platform on Solana for developers to submit and validate projects. It addresses the lack of transparent, trustless systems for showcasing skills and contributions. Developers submit projects with skills and GitHub links, validated by community vetters via smart contracts. Token rewards incentivize participation, ensuring fairness and trust.
 
-### Prerequisites
+## Problem
 
-- Node v18.18.0 or higher
+Centralized platforms for project showcasing often lack transparency, are prone to bias, and fail to validate project quality or reward contributors fairly.
 
-- Rust v1.77.2 or higher
-- Anchor CLI 0.30.1 or higher
-- Solana CLI 1.18.17 or higher
+## Solution
 
-### Installation
+ProfileX leverages Solana’s high-speed blockchain for:
 
-#### Clone the repo
+- **Project Submission**: Developers upload projects with skills and links.
+- **Community Validation**: Vetter score projects transparently.
+- **Token Rewards**: Submitters and vetters earn tokens.
+- **Decentralized Trust**: Smart contracts ensure fairness using Proof-of-Stake and Proof-of-History.
 
-```shell
-git clone <repo-url>
-cd <repo-name>
-```
+## Features
 
-#### Install Dependencies
+- Submit projects with GitHub links and skills (e.g., Rust, JS, Anchor).
+- Vetting by community-selected validators.
+- Transparent scoring and token rewards.
+- Built on Solana for speed and low costs.
 
-```shell
-bun install
-```
+## Tech Stack
 
-#### Start the web app
-
-```
-bun dev
-```
-
-## Apps
-
-### anchor
-
-This is a Solana program written in Rust using the Anchor framework.
-
-#### Commands
-
-You can use any normal anchor commands. Either move to the `anchor` directory and run the `anchor` command or prefix the command with `bun`, eg: `bun anchor`.
-
-#### Sync the program id:
-
-Running this command will create a new keypair in the `anchor/target/deploy` directory and save the address to the Anchor config file and update the `declare_id!` macro in the `./src/lib.rs` file of the program.
-
-You will manually need to update the constant in `anchor/lib/counter-exports.ts` to match the new program id.
-
-```shell
-bun anchor keys sync
-```
-
-#### Build the program:
-
-```shell
-bun anchor-build
-```
-
-#### Start the test validator with the program deployed:
-
-```shell
-bun anchor-localnet
-```
-
-#### Run the tests
-
-```shell
-bun anchor-test
-```
-
-#### Deploy to Devnet
-
-```shell
-bun anchor deploy --provider.cluster devnet
-```
-
-### web
-
-This is a React app that uses the Anchor generated client to interact with the Solana program.
-
-#### Commands
-
-Start the web app
-
-```shell
-bun dev
-```
-
-Build the web app
-
-```shell
-bun build
-```
+- **Blockchain**: Solana
+- **Smart Contracts**: Anchor (Rust)
+- **Frontend**: React, Next.js, Tailwind CSS, GSAP
+- **Wallet Integration**: `@solana/wallet-adapter-react`
+- **Token**: SPL Token for rewards
