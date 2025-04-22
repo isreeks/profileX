@@ -15,11 +15,15 @@ const nextConfig = {
     ];
     return config;
   },
+  
   nx: {
     // Set this to true if you would like to use SVGR
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  images: {
+    domains: ['images.pexels.com'],
+  }
 };
 
 const plugins = [

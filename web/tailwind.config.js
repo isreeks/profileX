@@ -16,7 +16,14 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    
     extend: {
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'hero-pattern': 'linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(26,26,26,0.7) 100%), url("/hero-bg.png")',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -31,6 +38,7 @@ module.exports = {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+        
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
@@ -51,7 +59,15 @@ module.exports = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        profilex: {
+          'neon': '#00FF99',
+          'green': '#00CC77',
+          'dark': '#1A1A1A',
+          'black': '#000000',
+        },
       },
+
+    
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
