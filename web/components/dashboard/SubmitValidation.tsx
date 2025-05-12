@@ -33,7 +33,7 @@ export function SubmitValidation({ projectOwner, projectTitle, onSuccess }: Subm
 
     setIsLoading(true);
     try {
-      const tx = await submitValidation(projectOwner, projectTitle, score , "3HdXZj5YXaLEcdmLFAUfTrtsCiaPgBYwAdAbMjyESUgy");
+      const tx = await submitValidation(projectOwner, projectTitle, score , "AxHCw4x8buZN2Cqw6kkQFLMpiFCotnX4kMNbQqjVx2fY");
       setIsOpen(false);
     //   toast({
     //     title: "Success",

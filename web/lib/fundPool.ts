@@ -8,11 +8,6 @@ import {
     getMint
 } from '@solana/spl-token';
 
-/**
- * Sends a transaction to fund the program's reward pool token account.
- * This function checks and creates the program's ATA and the signer's source ATA if they don't exist.
- * The connected wallet must hold the reward tokens in its associated token account.
- */
 export const fundProgramRewardPool = async (params) => {
     const {
         amount,
@@ -42,15 +37,14 @@ export const fundProgramRewardPool = async (params) => {
         );
         console.log("Authority PDA:", authorityPda.toBase58());
 
-        // --- Check/Create Program's Reward Pool ATA ---
         const programTokenAccountPubkey = await getAssociatedTokenAddress(
             tokenMintAddress,
             authorityPda,
-            true // allowOwnerOffCurve must be true for PDAs
+            true
         );
         console.log("Program's Token Account (ATA):", programTokenAccountPubkey.toBase58());
 
-        // Check if program's ATA exists
+    
         const programTokenAccountInfo = await connection.getAccountInfo(programTokenAccountPubkey);
         let transaction = new Transaction();
 
@@ -94,7 +88,6 @@ export const fundProgramRewardPool = async (params) => {
             console.log(`Signer's source token account (ATA) already exists: ${sourceTokenAccountPubkey.toBase58()}`);
         }
 
-        // Convert the human-readable amount to base units
         const mintAccount = await getMint(connection, tokenMintAddress);
         const amountInBaseUnits = amount * Math.pow(10, mintAccount.decimals);
 

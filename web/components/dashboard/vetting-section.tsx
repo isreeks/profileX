@@ -38,6 +38,9 @@ export function VettingSection() {
         proj.owner.toBase58() !== publicKey?.toBase58()
       );
 
+      console.log(availableProjects.map(proj => proj.vetters.map(vetter => vetter.toBase58())));
+      
+
       setProjects(availableProjects);
     } catch (error: any) {
       // toast({

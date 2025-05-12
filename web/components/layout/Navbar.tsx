@@ -6,6 +6,7 @@ import { ny } from '@/lib/utils';
 import { Coins, Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui';
+import LoginButton from '../ui/LoginButton';
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -50,7 +51,7 @@ export function Navbar() {
             <Link href="#community" className="text-white hover:text-profilex-neon transition-colors">
               Community
             </Link>
-            <WalletMultiButton className="ml-4 !bg-profilex-dark hover:!bg-opacity-90 !border !border-profilex-green !text-profilex-neon !rounded-lg !px-6 !py-2 transition-all duration-300 !font-poppins !font-medium" />
+   <LoginButton/>
           </div>
 
           {/* Mobile Menu Button */}

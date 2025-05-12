@@ -9,6 +9,12 @@ import { PortfolioSection } from './portfolio-section';
 import { VettingSection } from './vetting-section';
 import { JobsSection } from './jobs-section';
 import { LadderProgression, RewardBalance, ApplicationTracker } from './sidebar-components';
+import { Button } from '../ui/button';
+import { useContract } from '@/contexts/ContractContext';
+import CreateUserUI from './CreateUser';
+import { Fund } from './Fund';
+import { useUserExists } from '@/lib/utils';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 const links: { label: string; href: string }[] = [
   { label: 'Solana Docs', href: 'https://docs.solana.com/' },
@@ -32,10 +38,17 @@ export default function DashboardFeature() {
     avatarUrl: "/placeholder.svg?height=40&width=40",
   }
 
+  const {publicKey} = useWallet();
+
+  const { createUser } = useContract();
+
   const submittedProjects = [
     { id: 1, name: "DeFi Protocol", status: "Pending" },
     { id: 2, name: "NFT Marketplace", status: "Approved" },
   ]
+
+
+
 
 
   useEffect(() => {
@@ -43,6 +56,8 @@ export default function DashboardFeature() {
     ata();
 
   }, []);
+
+  const isUserCreated = useUserExists();
 
 
   async function ata() {
@@ -74,8 +89,11 @@ export default function DashboardFeature() {
   ]
   return (
     <div className="container mx-auto p-4">
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <ProfileOverview userProfile={userProfile} />
+
+
 
         {/* Main Dashboard Area */}
         <div className="md:col-span-2">
@@ -86,7 +104,9 @@ export default function DashboardFeature() {
               <TabsTrigger value="jobs">Jobs</TabsTrigger>
             </TabsList>
             <TabsContent value="portfolio">
+     
               <PortfolioSection submittedProjects={submittedProjects} />
+
             </TabsContent>
             <TabsContent value="vetting">
               <VettingSection vettingRequests={vettingRequests} />
@@ -106,6 +126,13 @@ export default function DashboardFeature() {
           <LadderProgression />
           <RewardBalance />
           <ApplicationTracker applications={applications} />
+
+          {
+            publicKey?.toBase58() === "6tia5tGv9dYLs5Gij2TLuC1bLwSC7L3u94MDjqsekRVS" ? (
+              <Fund />
+            ) : null
+          }
+       
         </div>
       </div>
     </div>

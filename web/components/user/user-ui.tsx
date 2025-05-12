@@ -5,6 +5,9 @@ import { useState } from "react"
 export const UserData = () => {
 
     const { users } = useUserProgram()
+
+    console.log(users);
+    
     return (
         <div>
             <div>

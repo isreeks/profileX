@@ -43,12 +43,13 @@ interface ContractContextType {
     submitValidation: (projectOwner: string, projectTitle: string, score: number, tokenMint: string ) => Promise<string>;
     fetchAccounts: () => Promise<{ users: UserAccount[], projects: ProjectAccount[] }>;
     fundPool: (amount: number) => Promise<string>;
+    getProgram : () => Program;
 }
 
 const ContractContext = createContext<ContractContextType | null>(null);
 
 export const PROGRAM_ID = new PublicKey('CChCHZ73fCThaPfKJKjSJqmHxm9yubpCTEsu6ZmHAe4C');
-export const TOKEN_MINT = new PublicKey('3HdXZj5YXaLEcdmLFAUfTrtsCiaPgBYwAdAbMjyESUgy');
+export const TOKEN_MINT = new PublicKey('AxHCw4x8buZN2Cqw6kkQFLMpiFCotnX4kMNbQqjVx2fY');
 
 export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const{publicKey , signTransaction , connected} = useWallet();
@@ -74,21 +75,31 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({ chil
     }, [getProvider]);
 
     const createUser = useCallback(async () => {
-        const program = getProgram();
+        const program = getProgram();        
+    
         const [userPda] = PublicKey.findProgramAddressSync(
-            [Buffer.from('user'), publicKey!.toBuffer()],
-            PROGRAM_ID
-        );
-
+            [Buffer.from('user'), publicKey.toBuffer()],
+            program.programId
+          );
+    
+        // Check payer balance
+        const connection = program.provider.connection;
+        const balance = await connection.getBalance(publicKey);
+        console.log(`Payer balance: ${balance / anchor.web3.LAMPORTS_PER_SOL} SOL`);
+    
+        if (balance < anchor.web3.LAMPORTS_PER_SOL) {
+            throw new Error('Insufficient SOL for account creation. Need at least 1 SOL.');
+        }
+    
         const tx = await program.methods
-            .createUser()
-            .accounts({
-                user: userPda,
-                authority: publicKey,
-                systemProgram: SystemProgram.programId,
-            })
-            .rpc({ commitment: 'confirmed' });
-
+        .createUser()
+        .accounts({
+          user: userPda,
+          authority: publicKey,
+          systemProgram: SystemProgram.programId,
+        })
+        .rpc({ commitment: 'confirmed' });
+    
         return tx;
     }, [getProgram, publicKey]);
 
@@ -539,6 +550,7 @@ export const ContractProvider: React.FC<{ children: React.ReactNode }> = ({ chil
         submitValidation,
         fetchAccounts,
         fundPool,
+        getProgram,
     };
 
     return (
